@@ -186,7 +186,7 @@ func (rfb *RFB) consumeHandshake() error {
 		// VNC authentication
 		_ = rfb.nextS(16)
 		_ = rfb.nextC(16)
-	} else {
+	} else if sec != 1 {
 		return fmt.Errorf("authentication type %d not implemented", sec)
 	}
 

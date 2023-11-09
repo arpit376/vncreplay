@@ -71,7 +71,7 @@ func (rfb *RFB) decodeFrameBufferUpdate() int {
 	buf := rfb.serverBuffer.Peek(rfb.serverBuffer.Remaining())
 	nRects := rInt(buf[2:4])
 	rectsAdded := 0
-	// log.Printf("Number of rects: %d", nRects)
+	log.Printf("Number of rects: %d", nRects)
 
 	offset := 4
 	for i := 0; i < nRects; i++ {
@@ -123,7 +123,7 @@ func (ppf PixelFormat) nextRect(buf []byte) (bytesRead int, img image.Image, enc
 	w := rInt(buf[4:6])
 	h := rInt(buf[6:8])
 	enctype = int32(uint32(rInt(buf[8:12])))
-	// log.Printf("next rect is a %dx%d rectangle at position %d,%d enctype %02x (%d)", w, h, x, y, enctype, enctype)
+	log.Printf("next rect is a %dx%d rectangle at position %d,%d enctype %02x (%d)", w, h, x, y, enctype, enctype)
 
 	rv := image.NewRGBA(image.Rect(x, y, x+w, y+h))
 
@@ -140,7 +140,7 @@ func (ppf PixelFormat) nextRect(buf []byte) (bytesRead int, img image.Image, enc
 		for j := 0; j < h; j++ {
 			for i := 0; i < w; i++ {
 				if offset >= len(buf) {
-					// log.Printf("Warning: image truncated")
+					log.Printf("Warning: image truncated")
 					return offset, rv, enctype
 				}
 
